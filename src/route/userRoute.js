@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createUser, deleteUser, getUsers, updateUser } from '../controller/userController.js';
+import { createUser, deleteUser, getUsers, login, updateUser } from '../controller/userController.js';
 const router = Router();
 
 /**
@@ -74,6 +74,26 @@ router.delete('/user/:id', deleteUser);
     */ 
 router.route('/user').get(getUsers);
 
+ /**
+    * @swagger
+    * tags:
+    *   name: User
+    *   description: The user managing API
+    * /api/user/login:
+    *  post:
+    *    summary: Login
+    *    tags: [Users]
+    *    requestBody:
+    *       content:
+    *         application/json:
+    *           schema:
+    *             $ref: '#/definitions/Login'
+    *    responses:
+    *      '200':
+    *        description: A successful response
+    */ 
+router.post('/user/login', login);
+
 /**
  * @swagger
  * definitions:
@@ -116,6 +136,16 @@ router.route('/user').get(getUsers);
  *         type: string
  */
 
+/**
+ * @swagger
+ * definitions:
+ *   Login:
+ *     properties:
+ *       username: 
+ *         type: string
+ *       password:
+ *         type: string
+ */
 
 
 /**

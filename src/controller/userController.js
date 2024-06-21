@@ -1,5 +1,6 @@
 import User from '../model/userModel.js'
 import bcyptjs from 'bcryptjs'
+import { createJWT } from '../utils/jwt.js';
 
 export const createUser = async (req, res) => {
     try {
@@ -28,7 +29,7 @@ export const login=async (req, res)=>{
     try{
         const userFind= await User.findOne({ username });
         if(!userFind)
-            res.status(400).send({message:"Credenciales incorrectas"});
+            res.status(400).send("Credenciales incorrectas");
  
         const isMatch= await bcyptjs.compare(password,userFind.password);
  
@@ -44,10 +45,10 @@ export const login=async (req, res)=>{
             status:userFind.status
         });
       res.cookie('token',token)
-        res.json({message:"User Login."}).send('token',token);
+        res.json({message:"User Login.",token:token});
     }catch (error){
         console.log(error)
-       res.send({message:error.message});
+      // res.send({message:error.message});
     }
  
  }
